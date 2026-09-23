@@ -1,13 +1,13 @@
 {% set name = "PythiaLabelGenerator" %}
-{% set version = "1.1.1" %}
+{% set version = "1.2.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pythialabelgenerator-{{ version }}.tar.gz
-  sha256: 2469fb9f979eb89872f05c583e5ac4cd3d050cc33cae0e3802123dc751a7900f
+  url: https://files.pythonhosted.org/packages/source/{{ name[0] }}/{{ name }}/pythialabelgenerator-{{ version }}.tar.gz
+  sha256: c94e15f8ed1e5d25cc94bc6ab7abb56cabc185c39e6bc999ab04d03a60380bc2
 
 build:
   entry_points:
