@@ -1,0 +1,61 @@
+schema_version: 1
+
+context:
+  version: "1.2.0"
+
+package:
+  name: pythialabelgenerator
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/p/pythialabelgenerator/pythialabelgenerator-${{ version }}.tar.gz
+  sha256: c94e15f8ed1e5d25cc94bc6ab7abb56cabc185c39e6bc999ab04d03a60380bc2
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - label = labelgenerator.main:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - hatchling
+    - pip
+  run:
+    - python >=${{ python_min }},<3.15
+    - pythiaphylopredictor >=2.1.0
+    - regex
+    - loguru
+    - __unix
+
+tests:
+  - python:
+      imports:
+        - labelgenerator
+        - labelgenerator.iqtree
+        - labelgenerator.iqtree_parser
+        - labelgenerator.label
+        - labelgenerator.raxmlng
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "3.14.*"
+  - script:
+      - label --help
+      - label --version | grep -Fx "${{ version }}"
+    requirements:
+      run:
+        - python ${{ python_min }}.*
+
+about:
+  homepage: https://github.com/tschuelia/PythiaLabelGenerator
+  summary: Command line tool to generate the ground-truth phylogenetic difficulty of MSAs
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschuelia
